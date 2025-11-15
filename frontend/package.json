@@ -4,21 +4,22 @@
   "description": "Frontend for AI Bubble Analytics",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@supabase/supabase-js": "^2.39.0",
+    "axios": "^1.6.2",
+    "chart.js": "^4.4.1",
+    "chartjs-plugin-annotation": "^3.0.1",
+    "d3": "^7.8.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
     "recharts": "^2.10.3",
-    "d3": "^7.8.5",
-    "zustand": "^4.4.7",
-    "axios": "^1.6.2",
-    "chart.js": "^4.4.1",
-    "chartjs-plugin-annotation": "^3.0.1"
+    "zustand": "^4.4.7"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -39,9 +40,9 @@
     ]
   },
   "devDependencies": {
-    "react-scripts": "5.0.1",
-    "tailwindcss": "^3.4.0",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32"
+    "postcss": "^8.4.32",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^3.4.0"
   }
 }

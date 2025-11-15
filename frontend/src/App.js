@@ -13,16 +13,29 @@ import NewsletterPage from './components/NewsletterPage';
  */
 function App() {
   return (
-    <Router>
-      <div className="App">
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
+      <div className="App min-h-screen flex flex-col">
         <Navigation />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/metrics" element={<MetricsPage />} />
-          <Route path="/context" element={<ContextPage />} />
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/newsletter" element={<NewsletterPage />} />
-        </Routes>
+        <div className="flex-1">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/metrics" element={<MetricsPage />} />
+            <Route path="/context" element={<ContextPage />} />
+            <Route path="/news" element={<NewsPage />} />
+            <Route path="/newsletter" element={<NewsletterPage />} />
+          </Routes>
+        </div>
+        <footer className="bg-black/80 border-t border-white/10 mt-8">
+          <div className="container mx-auto px-4 py-4 text-center text-xs md:text-sm text-gray-400">
+            <span className="font-semibold text-white">E:</span>{' '}
+            <span className="text-purple-400">digitalhumanassistants.io</span>
+          </div>
+        </footer>
       </div>
     </Router>
   );

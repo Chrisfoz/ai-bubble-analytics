@@ -213,9 +213,9 @@ const NewsletterPage = () => {
               </div>
 
               <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-                <a href="#" className="text-purple-600 font-semibold hover:text-purple-700">
+                <Link to="/metrics" className="text-purple-600 font-semibold hover:text-purple-700">
                   View Full Dashboard →
-                </a>
+                </Link>
               </div>
             </div>
           </div>

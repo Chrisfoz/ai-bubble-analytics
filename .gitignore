@@ -51,3 +51,9 @@ Thumbs.db
 .vercel
 .netlify
 .railway
+
+# Frontend build output
+frontend/build/
+
+#history
+.history/

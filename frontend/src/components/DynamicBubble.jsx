@@ -130,35 +130,6 @@ const DynamicBubble = ({ size = 50, riskLevel = 'MODERATE' }) => {
         Bubble size represents the divergence between S&P 500 weight and earnings share 
         of the Magnificent 7 tech companies. Current divergence: <span className="text-red-400 font-bold">10.4%</span>
       </p>
-
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) scale(var(--scale, 1)); }
-          50% { transform: translateY(-20px) scale(var(--scale, 1)); }
-        }
-
-        @keyframes float-particle {
-          0%, 100% { 
-            transform: translate(0, 0); 
-            opacity: 0.3;
-          }
-          50% { 
-            transform: translate(
-              ${Math.random() * 20 - 10}px, 
-              ${Math.random() * 20 - 10}px
-            ); 
-            opacity: 1;
-          }
-        }
-
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-        }
-
-        .animate-float-particle {
-          animation: float-particle 3s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 };

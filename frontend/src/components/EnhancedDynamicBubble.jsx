@@ -399,57 +399,6 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
         The AI Bubble Index (ABI) synthesizes 10 institutional metrics tracking market concentration,
         revenue gaps, debt levels, and adoption rates. Current index: <span className="text-red-400 font-bold">{Math.round(size)}/100</span>
       </p>
-
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-
-        @keyframes float-particle {
-          0%, 100% {
-            transform: translate(0, 0);
-            opacity: 0.3;
-          }
-          50% {
-            transform: translate(
-              ${Math.random() * 20 - 10}px,
-              ${Math.random() * 20 - 10}px
-            );
-            opacity: 1;
-          }
-        }
-
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-        }
-
-        .animate-float-particle {
-          animation: float-particle 3s ease-in-out infinite;
-        }
-
-        /* Custom slider styling */
-        .slider::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 20px;
-          height: 20px;
-          background: #fbbf24;
-          cursor: pointer;
-          border-radius: 50%;
-          box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
-        }
-
-        .slider::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
-          background: #fbbf24;
-          cursor: pointer;
-          border-radius: 50%;
-          border: none;
-          box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
-        }
-      `}</style>
     </div>
   );
 };
