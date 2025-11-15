@@ -1,0 +1,35 @@
+{
+  "name": "ai-bubble-analytics",
+  "version": "1.0.0",
+  "description": "AI Bubble Impact Analytics - Track and analyze AI investment risks",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chrisfoz/ai-bubble-analytics.git"
+  },
+  "keywords": [
+    "ai",
+    "bubble",
+    "analytics",
+    "investment",
+    "portfolio",
+    "simulation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Chrisfoz/ai-bubble-analytics/issues"
+  },
+  "homepage": "https://github.com/Chrisfoz/ai-bubble-analytics#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
