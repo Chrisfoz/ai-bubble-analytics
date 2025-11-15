@@ -10,12 +10,12 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: Georgia, 'Times New Roman', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  background-color: #0D1117;
+  color: #E8E8E8;
 }
 
 code {
@@ -23,22 +23,22 @@ code {
     monospace;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Berkshire Hathaway Burgundy */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(13, 17, 23, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.5);
+  background: rgba(128, 0, 0, 0.6);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.7);
+  background: rgba(128, 0, 0, 0.9);
 }
 
 /* Custom Animations */
@@ -111,17 +111,17 @@ code {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Gradient text */
+/* Gradient text - Conservative Burgundy */
 .gradient-text {
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  background: linear-gradient(135deg, #800000 0%, #A00000 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Custom focus styles */
+/* Custom focus styles - Burgundy */
 *:focus-visible {
-  outline: 2px solid #a855f7;
+  outline: 2px solid #800000;
   outline-offset: 2px;
 }
 
@@ -186,10 +186,10 @@ button, a, input, select, textarea {
   background: #64748b;
 }
 
-/* Timeline Slider Custom Styling */
+/* Timeline Slider Custom Styling - Berkshire Burgundy */
 .slider {
   height: 6px;
-  background: #334155;
+  background: #4A5A6A;
   border-radius: 3px;
   outline: none;
   -webkit-appearance: none;
@@ -201,32 +201,32 @@ button, a, input, select, textarea {
   appearance: none;
   width: 20px;
   height: 20px;
-  background: #fbbf24;
+  background: #800000;
   cursor: pointer;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  box-shadow: 0 0 10px rgba(128, 0, 0, 0.5);
   transition: all 0.2s ease;
 }
 
 .slider::-webkit-slider-thumb:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+  box-shadow: 0 0 15px rgba(128, 0, 0, 0.8);
 }
 
 .slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: #fbbf24;
+  background: #800000;
   cursor: pointer;
   border-radius: 50%;
   border: none;
-  box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  box-shadow: 0 0 10px rgba(128, 0, 0, 0.5);
   transition: all 0.2s ease;
 }
 
 .slider::-moz-range-thumb:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+  box-shadow: 0 0 15px rgba(128, 0, 0, 0.8);
 }
 
 /* Floating particle animation */
@@ -293,9 +293,9 @@ button, a, input, select, textarea {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* Glow effect for active elements */
+/* Glow effect for active elements - Burgundy */
 .glow-on-hover:hover {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 20px rgba(128, 0, 0, 0.4);
   transition: box-shadow 0.3s ease;
 }
 
