@@ -30,10 +30,15 @@ function App() {
             <Route path="/newsletter" element={<NewsletterPage />} />
           </Routes>
         </div>
-        <footer className="bg-black/80 border-t border-white/10 mt-8">
-          <div className="container mx-auto px-4 py-4 text-center text-xs md:text-sm text-gray-400">
-            <span className="font-semibold text-white">E:</span>{' '}
-            <span className="text-purple-400">digitalhumanassistants.io</span>
+        <footer className="bg-slate-50 border-t border-slate-200 mt-8">
+          <div className="container mx-auto px-4 py-4 text-center text-[11px] md:text-sm text-slate-600 flex flex-col md:flex-row items-center justify-between gap-2">
+            <div className="text-slate-500">
+              © {new Date().getFullYear()} AI Bubble Analytics · For educational purposes only
+            </div>
+            <div>
+              <span className="font-semibold text-slate-800 tracking-wide">E:</span>{' '}
+              <span className="text-purple-700 font-medium">digitalhumanassistants.io</span>
+            </div>
           </div>
         </footer>
       </div>

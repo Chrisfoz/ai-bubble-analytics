@@ -11,15 +11,47 @@ const MetricsPage = () => {
       <div className="container mx-auto px-4 py-16">
         {/* Header */}
         <div className="max-w-7xl mx-auto mb-12">
-          <Link to="/" className="text-purple-400 hover:text-purple-300 mb-4 inline-block">
+          <Link to="/" className="text-purple-300 hover:text-purple-200 mb-4 inline-block text-sm">
             ← Back to Home
           </Link>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            AI Bubble Metrics Dashboard
-          </h1>
-          <p className="text-xl text-gray-300 mb-6">
-            Track all 10 institutional-grade indicators in real-time
-          </p>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-semibold text-white mb-2">
+                AI Bubble Metrics Dashboard
+              </h1>
+              <p className="text-base md:text-lg text-gray-200">
+                Track all 10 institutional-grade indicators in real-time.
+              </p>
+            </div>
+            {/* Metrics quick-jump dropdown */}
+            <div className="w-full md:w-80">
+              <label className="block text-xs font-medium text-gray-300 mb-1">
+                Jump to metric group
+              </label>
+              <select
+                className="w-full text-sm rounded-md border border-white/20 bg-white/10 text-gray-100 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple-400 focus:border-purple-400 backdrop-blur"
+                defaultValue=""
+                onChange={(e) => {
+                  const targetId = e.target.value;
+                  if (!targetId) return;
+                  const el = document.getElementById(targetId);
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+              >
+                <option value="" disabled>
+                  Select a metric group…
+                </option>
+                <option value="metrics-structure">Tier 1 – Market structure</option>
+                <option value="metrics-financial">Tier 2 – Financial risk</option>
+                <option value="metrics-adoption">Tier 3 – Adoption & sentiment</option>
+                <option value="metrics-valuation">Tier 4 – Valuation & concentration</option>
+                <option value="metrics-summary">Summary – Bubble risk assessment</option>
+                <option value="metrics-disclaimer">Legal disclaimer</option>
+              </select>
+            </div>
+          </div>
           
           {/* Quick Stats Bar */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
