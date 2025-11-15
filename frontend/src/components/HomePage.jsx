@@ -44,10 +44,10 @@ const HomePage = () => {
 
         <div className="relative container mx-auto px-4 py-20">
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-7xl font-bold text-[#E8E8E8] mb-6" style={{fontFamily: 'Georgia, serif'}}>
+            <h1 className="text-5xl md:text-7xl font-bold text-[#E8E8E8] mb-6">
               AI Bubble <span className="text-[#800000]">Analytics</span>
             </h1>
-            <p className="text-xl md:text-2xl text-[#C0C0C0] max-w-3xl mx-auto" style={{fontFamily: 'Georgia, serif'}}>
+            <p className="text-xl md:text-2xl text-[#C0C0C0] max-w-3xl mx-auto">
               Institutional-grade analysis of AI market concentration using data from RBC Capital Markets, Richmond Fed, and Apollo Global Management
             </p>
           </div>
@@ -103,7 +103,7 @@ const HomePage = () => {
       <div className="bg-[#0a0e14]/50 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-[#E8E8E8] mb-6 text-center" style={{fontFamily: 'Georgia, serif'}}>What is the AI Bubble?</h2>
+            <h2 className="text-3xl font-bold text-[#E8E8E8] mb-6 text-center">What is the AI Bubble?</h2>
             <div className="bg-[#1a1f2e]/70 backdrop-blur-lg rounded-xl p-8 border border-[#4A5A6A]/50">
               <p className="text-[#C0C0C0] text-lg leading-relaxed mb-4">
                 The AI bubble refers to a theorized stock market bubble growing amid the current AI boom.
@@ -144,7 +144,7 @@ const HomePage = () => {
       <div className="bg-[#800000]/10 border-y border-[#800000]/30 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-[#E8E8E8] mb-4" style={{fontFamily: 'Georgia, serif'}}>Stay Informed</h2>
+            <h2 className="text-3xl font-bold text-[#E8E8E8] mb-4">Stay Informed</h2>
             <p className="text-[#C0C0C0] mb-8">
               Receive institutional-grade AI market analysis and commentary
             </p>
