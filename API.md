@@ -1,0 +1,660 @@
+# AI Bubble Analytics - API Documentation
+
+**Version:** 1.0.0
+**Last Updated:** November 15, 2025
+**Base URL:** `http://localhost:5000/api` (development) | `https://api.aibubbleanalytics.com` (production)
+
+---
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Authentication](#authentication)
+3. [Rate Limiting](#rate-limiting)
+4. [Data Sources](#data-sources)
+5. [API Endpoints](#api-endpoints)
+6. [Data Models](#data-models)
+7. [Error Handling](#error-handling)
+8. [Webhook Integration](#webhook-integration)
+9. [Testing](#testing)
+10. [Deployment](#deployment)
+
+---
+
+## Overview
+
+The AI Bubble Analytics API provides institutional-grade data on AI market concentration, valuation metrics, and bubble risk indicators. All data is sourced from verified providers and updated on schedules matching their official release cadences.
+
+### Key Features
+
+- **10 Institutional Metrics**: Real-time tracking of AI bubble indicators
+- **Historical Data**: 2+ years of historical bubble index data
+- **Expert Citations**: Verified quotes with timestamps and URLs
+- **Data Transparency**: Every metric includes source, update frequency, and confidence level
+- **Rate Limited**: Fair usage policies to ensure API stability
+
+### Technology Stack
+
+- **Backend**: Node.js + Express
+- **Database**: Supabase (PostgreSQL)
+- **Caching**: Redis (optional)
+- **Authentication**: JWT (optional)
+- **Scheduling**: node-cron
+
+---
+
+## Authentication
+
+### Public Endpoints
+
+Most read endpoints are public and require no authentication. Rate limiting applies.
+
+```bash
+GET /api/metrics/bubble-index
+GET /api/metrics/magnificent7
+GET /api/citations/experts
+```
+
+### Protected Endpoints (Admin)
+
+Admin endpoints require an API key passed in headers:
+
+```bash
+POST /api/admin/refresh-data
+DELETE /api/admin/cache/clear
+
+Headers:
+  X-API-Key: your-api-secret-key
+```
+
+### JWT Authentication (Optional)
+
+If user authentication is implemented:
+
+```bash
+POST /api/auth/register
+POST /api/auth/login
+GET /api/user/profile
+
+Headers:
+  Authorization: Bearer <jwt-token>
+```
+
+---
+
+## Rate Limiting
+
+**Default Limits:**
+- **Public API**: 100 requests per 15 minutes per IP
+- **Authenticated**: 500 requests per 15 minutes per user
+- **Admin**: Unlimited
+
+**Rate Limit Headers:**
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1731686400
+```
+
+**Rate Limit Exceeded Response:**
+```json
+{
+  "error": "Too Many Requests",
+  "message": "Rate limit exceeded. Try again in 5 minutes.",
+  "retryAfter": 300
+}
+```
+
+---
+
+## Data Sources
+
+### 1. Stock Market Data (S&P 500, Magnificent 7)
+
+**Provider:** S&P Global via Yahoo Finance API
+**Update Frequency:** Daily at 4:30 PM EST (market close)
+**API:** Yahoo Finance (free tier) or Alpha Vantage
+**Rate Limits:** 5 requests/minute (Yahoo), 500/day (Alpha Vantage free)
+
+**Example Request:**
+```bash
+# Yahoo Finance (via yfinance Python library or API)
+GET https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC
+
+# Alpha Vantage
+GET https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=NVDA&apikey=YOUR_API_KEY
+```
+
+**Data Points Tracked:**
+- Market cap of Magnificent 7 (AAPL, MSFT, GOOGL, AMZN, NVDA, META, TSLA)
+- Combined weight in S&P 500
+- Earnings contribution
+- Forward P/E ratios
+
+---
+
+### 2. Revenue & Earnings Forecasts
+
+**Provider:** Gartner, Inc. + IDC Research
+**Update Frequency:** Quarterly reports
+**Access:** Manual data entry from published reports
+**Cost:** Paid subscription required for real-time access
+
+**Alternative:** Company quarterly earnings reports (10-K, 10-Q from SEC EDGAR)
+
+**SEC EDGAR API:**
+```bash
+# Get company filings
+GET https://data.sec.gov/submissions/CIK0001318605.json
+```
+
+**Rate Limits:** 10 requests/second
+
+---
+
+### 3. Google Trends (Search Volume)
+
+**Provider:** Google Trends
+**Update Frequency:** Hourly
+**API:** Unofficial (pytrends Python library) or SerpAPI
+
+**Using SerpAPI (Paid, $50/month for 5,000 searches):**
+```bash
+GET https://serpapi.com/search.json?engine=google_trends&q=ai+bubble&data_type=TIMESERIES&api_key=YOUR_API_KEY
+```
+
+**Using pytrends (Free but requires Python backend):**
+```python
+from pytrends.request import TrendReq
+pytrends = TrendReq(hl='en-US', tz=360)
+pytrends.build_payload(['ai bubble'], timeframe='today 24-m')
+data = pytrends.interest_over_time()
+```
+
+---
+
+### 4. U.S. Census Bureau (Business AI Adoption)
+
+**Provider:** U.S. Census Bureau - Business Trends and Outlook Survey (BTOS)
+**Update Frequency:** Monthly (first Tuesday)
+**API:** Census Bureau API
+**Access:** Free, requires API key
+
+**API Request:**
+```bash
+GET https://api.census.gov/data/2024/btos?get=ADOPTION_AI&key=YOUR_CENSUS_API_KEY
+```
+
+**Get API Key:** https://api.census.gov/data/key_signup.html
+
+---
+
+### 5. Venture Capital Data (Circular Financing)
+
+**Provider:** PitchBook Data, Inc.
+**Update Frequency:** Weekly (Fridays)
+**Access:** Paid subscription ($20,000+/year for institutional access)
+**Alternative:** Crunchbase API (partial data, $29/month)
+
+**Crunchbase API:**
+```bash
+GET https://api.crunchbase.com/api/v4/entities/organizations/nvidia?user_key=YOUR_KEY
+```
+
+**Manual Tracking:** For circular financing flows, manual tracking from public press releases and SEC filings.
+
+---
+
+### 6. Stock Valuation Metrics (P/E Ratios)
+
+**Provider:** Bloomberg Terminal, FactSet, or Finnhub (affordable alternative)
+**Update Frequency:** Real-time (15-minute delay for free tier)
+**API:** Finnhub
+
+**Finnhub API (Free tier: 60 calls/minute):**
+```bash
+GET https://finnhub.io/api/v1/quote?symbol=NVDA&token=YOUR_FINNHUB_API_KEY
+GET https://finnhub.io/api/v1/stock/metric?symbol=NVDA&metric=all&token=YOUR_API_KEY
+```
+
+**Get API Key:** https://finnhub.io/register
+
+---
+
+### 7. Energy Consumption Data
+
+**Provider:** International Energy Agency (IEA)
+**Update Frequency:** Annual reports + quarterly updates
+**Access:** Manual data entry from published reports
+**Reports:** https://www.iea.org/reports/electricity-2025
+
+**Alternative:** U.S. Energy Information Administration (EIA) API
+```bash
+GET https://api.eia.gov/v2/electricity/retail-sales/data/?api_key=YOUR_EIA_KEY
+```
+
+---
+
+### 8. News & Expert Quotes
+
+**Provider:** News API, Bloomberg API, Reuters
+**Update Frequency:** Real-time
+**API:** News API (free tier: 100 requests/day)
+
+**News API Request:**
+```bash
+GET https://newsapi.org/v2/everything?q=ai+bubble&sortBy=publishedAt&apiKey=YOUR_NEWS_API_KEY
+```
+
+**Get API Key:** https://newsapi.org/register
+
+---
+
+## API Endpoints
+
+### Metrics Endpoints
+
+#### Get AI Bubble Index
+```http
+GET /api/metrics/bubble-index
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "bubbleIndex": 70,
+    "riskLevel": "HIGH",
+    "lastUpdated": "2025-11-15T16:30:00-05:00",
+    "nextRefresh": "2025-11-15T16:35:00-05:00",
+    "components": {
+      "magnificent7Divergence": 10.4,
+      "revenueGap": 600,
+      "circularFinancing": 180,
+      "valuationPremium": 270,
+      "debtRatio": 0.75,
+      "searchVolume": 1567,
+      "adoptionRate": 9.8,
+      "indexConcentration": 30,
+      "peRatio": 40.2,
+      "energyFootprint": 2.5
+    }
+  },
+  "timestamp": "2025-11-15T16:30:00-05:00"
+}
+```
+
+---
+
+#### Get Magnificent 7 Metrics
+```http
+GET /api/metrics/magnificent7
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "weight": 44.2,
+    "earnings": 33.8,
+    "divergence": 10.4,
+    "companies": [
+      {
+        "symbol": "NVDA",
+        "name": "Nvidia",
+        "marketCap": 5000000000000,
+        "weight": 7.3,
+        "earningsContribution": 5.1
+      },
+      // ... other 6 companies
+    ],
+    "lastUpdated": "2025-11-15T16:30:00-05:00",
+    "source": {
+      "provider": "S&P Global Market Intelligence",
+      "url": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
+      "updateFrequency": "Daily at 4:30 PM EST"
+    }
+  }
+}
+```
+
+---
+
+#### Get Historical Bubble Data
+```http
+GET /api/metrics/history?start=2023-01-01&end=2025-11-15&interval=monthly
+```
+
+**Query Parameters:**
+- `start` (string): Start date (ISO 8601 format)
+- `end` (string): End date (ISO 8601 format)
+- `interval` (string): `daily`, `weekly`, `monthly` (default: `monthly`)
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "timePoints": [
+      {
+        "date": "2023-01-01",
+        "bubbleIndex": 35,
+        "riskLevel": "MODERATE",
+        "catalyst": "ChatGPT launch afterglow",
+        "metrics": {
+          "m7_weight": 32.5,
+          "m7_earnings": 29.8,
+          "revenue_gap": 45,
+          "debt_ratio": 0.35,
+          "adoption_rate": 3.7,
+          "search_volume": 100
+        }
+      }
+      // ... more time points
+    ],
+    "count": 33,
+    "interval": "monthly"
+  }
+}
+```
+
+---
+
+#### Get All Metrics
+```http
+GET /api/metrics/all
+```
+
+**Response:** Complete snapshot of all 10 metrics with sources and timestamps.
+
+---
+
+### Citations Endpoints
+
+#### Get Expert Quotes
+```http
+GET /api/citations/experts
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "samAltman": {
+      "quote": "AI is a bubble",
+      "speaker": "Sam Altman",
+      "title": "CEO, OpenAI",
+      "date": "2024-01-16",
+      "time": "14:30 EST",
+      "source": "World Economic Forum, Davos",
+      "url": "https://www.weforum.org/events/...",
+      "fullQuote": "There's definitely elements of a bubble here...",
+      "context": "Interview at WEF panel discussing AI investment trends"
+    }
+    // ... other experts
+  }
+}
+```
+
+---
+
+#### Get Data Source Citations
+```http
+GET /api/citations/sources
+```
+
+**Response:** Complete metadata for all 10+ data sources with update frequencies and URLs.
+
+---
+
+### Newsletter Endpoints
+
+#### Subscribe to Newsletter
+```http
+POST /api/newsletter/subscribe
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "frequency": "weekly"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Successfully subscribed to newsletter",
+  "data": {
+    "email": "user@example.com",
+    "frequency": "weekly",
+    "subscribedAt": "2025-11-15T16:30:00Z"
+  }
+}
+```
+
+---
+
+### Admin Endpoints
+
+#### Trigger Data Refresh
+```http
+POST /api/admin/refresh-data
+X-API-Key: your-api-secret-key
+Content-Type: application/json
+
+{
+  "metrics": ["magnificent7", "searchVolume", "all"]
+}
+```
+
+#### Clear Cache
+```http
+DELETE /api/admin/cache/clear
+X-API-Key: your-api-secret-key
+```
+
+---
+
+## Data Models
+
+### BubbleMetric
+```typescript
+interface BubbleMetric {
+  id: string;
+  name: string;
+  value: number;
+  unit: string;
+  riskLevel: 'LOW' | 'MODERATE' | 'HIGH' | 'EXTREME';
+  lastUpdated: string; // ISO 8601 timestamp
+  source: DataSource;
+  confidence: 'HIGH' | 'MEDIUM' | 'LOW';
+}
+```
+
+### DataSource
+```typescript
+interface DataSource {
+  provider: string;
+  dataset: string;
+  url: string;
+  updateFrequency: string;
+  lastUpdated: string;
+  apiEndpoint?: string;
+}
+```
+
+### BubbleIndex
+```typescript
+interface BubbleIndex {
+  value: number; // 0-100
+  riskLevel: 'LOW' | 'MODERATE' | 'HIGH' | 'EXTREME';
+  components: {
+    [metricName: string]: number;
+  };
+  lastUpdated: string;
+  nextRefresh: string;
+}
+```
+
+---
+
+## Error Handling
+
+### Error Response Format
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid date format",
+    "details": {
+      "field": "start",
+      "expected": "ISO 8601 date string"
+    }
+  },
+  "timestamp": "2025-11-15T16:30:00Z"
+}
+```
+
+### Error Codes
+
+| Code | HTTP Status | Description |
+|------|-------------|-------------|
+| `VALIDATION_ERROR` | 400 | Invalid request parameters |
+| `UNAUTHORIZED` | 401 | Missing or invalid API key |
+| `FORBIDDEN` | 403 | Insufficient permissions |
+| `NOT_FOUND` | 404 | Resource not found |
+| `RATE_LIMIT_EXCEEDED` | 429 | Too many requests |
+| `INTERNAL_ERROR` | 500 | Server error |
+| `SERVICE_UNAVAILABLE` | 503 | External API unavailable |
+
+---
+
+## Webhook Integration
+
+### Newsletter Webhook
+When a user subscribes, send webhook to Mailchimp/SendGrid:
+
+```http
+POST https://api.mailchimp.com/3.0/lists/{AUDIENCE_ID}/members
+Authorization: Bearer YOUR_MAILCHIMP_API_KEY
+
+{
+  "email_address": "user@example.com",
+  "status": "subscribed",
+  "merge_fields": {
+    "FREQUENCY": "weekly"
+  }
+}
+```
+
+---
+
+## Testing
+
+### Manual Testing with cURL
+
+```bash
+# Get bubble index
+curl http://localhost:5000/api/metrics/bubble-index
+
+# Get historical data
+curl "http://localhost:5000/api/metrics/history?start=2023-01-01&end=2025-11-15&interval=monthly"
+
+# Subscribe to newsletter
+curl -X POST http://localhost:5000/api/newsletter/subscribe \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","frequency":"weekly"}'
+```
+
+### Automated Testing
+
+```bash
+# Run backend tests
+cd backend
+npm test
+```
+
+---
+
+## Deployment
+
+### Environment Variables
+
+See `.env.example` for complete list. Critical variables:
+
+```bash
+NODE_ENV=production
+PORT=5000
+SUPABASE_URL=your-supabase-url
+SUPABASE_ANON_KEY=your-anon-key
+API_SECRET_KEY=your-admin-api-key
+```
+
+### Deployment Platforms
+
+**Recommended:**
+- **Backend API**: Vercel, Railway, Render, AWS Lambda
+- **Database**: Supabase (managed PostgreSQL)
+- **Frontend**: Vercel, Netlify, Cloudflare Pages
+- **Caching**: Upstash Redis (serverless)
+
+### Docker Deployment
+
+```dockerfile
+# Dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 5000
+CMD ["npm", "start"]
+```
+
+```bash
+# Build and run
+docker build -t ai-bubble-api .
+docker run -p 5000:5000 --env-file .env ai-bubble-api
+```
+
+---
+
+## API Costs Breakdown
+
+### Free Tier (Hobby/MVP)
+- **Yahoo Finance**: Free (basic data)
+- **Census API**: Free (requires key)
+- **News API**: Free (100 requests/day)
+- **Finnhub**: Free (60 calls/min)
+- **Total**: $0/month
+
+### Recommended Tier (Production)
+- **Alpha Vantage Premium**: $50/month (unlimited calls)
+- **SerpAPI**: $50/month (5,000 searches)
+- **News API**: $449/month (1M requests)
+- **Supabase Pro**: $25/month (8GB database)
+- **Total**: ~$575/month
+
+### Enterprise Tier
+- **Bloomberg Terminal**: $24,000/year
+- **PitchBook**: $20,000+/year
+- **Total**: $44,000+/year
+
+---
+
+## Support & Contributing
+
+**Issues:** https://github.com/Chrisfoz/ai-bubble-analytics/issues
+**Documentation:** https://github.com/Chrisfoz/ai-bubble-analytics#readme
+**License:** MIT
+
+---
+
+**Last Updated:** November 15, 2025
+**Version:** 1.0.0
