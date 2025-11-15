@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import DynamicBubble from './DynamicBubble';
+import EnhancedDynamicBubble from './EnhancedDynamicBubble';
 
 /**
  * Home Page Component
@@ -52,8 +52,8 @@ const HomePage = () => {
             </p>
           </div>
 
-          {/* Dynamic Bubble Visualization */}
-          <DynamicBubble size={bubbleSize} riskLevel={riskLevel} />
+          {/* Enhanced Dynamic Bubble Visualization with Timeline & Transparency */}
+          <EnhancedDynamicBubble initialSize={bubbleSize} initialRiskLevel={riskLevel} />
 
           {/* Key Metrics Summary */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
