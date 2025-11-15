@@ -22,23 +22,23 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="bg-black/30 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
+    <nav className="bg-[#0D1117]/95 backdrop-blur-lg border-b border-[#4A5A6A]/30 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo - Berkshire Conservative */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-[#800000] flex items-center justify-center">
               <span className="text-white font-bold text-xl">AI</span>
             </div>
             <div className="hidden md:block">
-              <div className="text-white font-bold text-lg group-hover:text-purple-400 transition-colors">
+              <div className="text-[#E8E8E8] font-bold text-lg group-hover:text-[#A00000] transition-colors">
                 AI Bubble Analytics
               </div>
-              <div className="text-gray-400 text-xs">Real-time tracking</div>
+              <div className="text-[#A0A0A0] text-xs">Institutional-grade analysis</div>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Berkshire Colors */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map(link => (
               <Link
@@ -46,8 +46,8 @@ const Navigation = () => {
                 to={link.path}
                 className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${
                   isActive(link.path)
-                    ? 'bg-purple-600 text-white'
-                    : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                    ? 'bg-[#800000] text-white'
+                    : 'text-[#C0C0C0] hover:bg-[#4A5A6A]/20 hover:text-white'
                 }`}
               >
                 {link.label}
@@ -55,18 +55,18 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* CTA Button - Desktop */}
+          {/* CTA Button - Desktop - Burgundy */}
           <Link
             to="/newsletter"
-            className="hidden md:block px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+            className="hidden md:block px-6 py-2 bg-[#800000] hover:bg-[#A00000] text-white font-semibold rounded-lg transition-all duration-300"
           >
             Subscribe
           </Link>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+            className="md:hidden p-2 text-[#E8E8E8] hover:bg-[#4A5A6A]/20 rounded-lg transition-colors"
             aria-label="Toggle menu"
           >
             <svg
@@ -94,9 +94,9 @@ const Navigation = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Full Screen Overlay */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-white/10">
+          <div className="md:hidden py-4 border-t border-[#4A5A6A]/30 bg-[#0D1117]/98">
             <div className="flex flex-col gap-2">
               {navLinks.map(link => (
                 <Link
@@ -105,8 +105,8 @@ const Navigation = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${
                     isActive(link.path)
-                      ? 'bg-purple-600 text-white'
-                      : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                      ? 'bg-[#800000] text-white'
+                      : 'text-[#C0C0C0] hover:bg-[#4A5A6A]/20 hover:text-white'
                   }`}
                 >
                   {link.label}
@@ -115,7 +115,7 @@ const Navigation = () => {
               <Link
                 to="/newsletter"
                 onClick={() => setMobileMenuOpen(false)}
-                className="mt-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg text-center"
+                className="mt-2 px-4 py-3 bg-[#800000] hover:bg-[#A00000] text-white font-semibold rounded-lg text-center"
               >
                 Subscribe to Newsletter
               </Link>

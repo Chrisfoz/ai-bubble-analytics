@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { bubbleHistoryData, getBubbleDataByIndex } from '../data/bubbleHistory';
 import { getAllDataSources, formatUpdateTimestamp } from '../data/dataSources';
+import { dataSourcesCitations } from '../data/citations';
 
 /**
  * Enhanced Dynamic Bubble Visualization Component
@@ -135,24 +136,152 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
             </button>
           </div>
           <div className="space-y-3 text-xs">
-            {getAllDataSources().slice(0, 6).map((source) => (
-              <div key={source.key} className="border-b border-slate-700 pb-2">
-                <div className="text-white font-semibold mb-1">
-                  {source.icon} {source.name}
-                </div>
-                <div className="text-gray-400 mb-1">📡 {source.provider}</div>
-                <div className="text-gray-500 text-[10px]">🔄 {source.updateFrequency}</div>
-                <div className="text-green-400 text-[10px]">✓ {source.confidence}</div>
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 text-[10px] underline"
-                >
-                  View Source →
-                </a>
+            {/* S&P 500 Data */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                📊 S&P 500 Index Data
               </div>
-            ))}
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.sp500Data.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.sp500Data.updateFrequency}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.sp500Data.lastUpdated).toLocaleString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  timeZoneName: 'short'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.sp500Data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* Gartner/IDC Forecasts */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                💰 AI Revenue Forecasts
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.gartnerForecasts.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                📄 {dataSourcesCitations.gartnerForecasts.report}<br/>
+                📅 Published: {new Date(dataSourcesCitations.gartnerForecasts.publishDate).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.gartnerForecasts.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* SEC Filings */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                💳 SEC Corporate Filings
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.secFilings.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.secFilings.updateFrequency}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.secFilings.lastUpdated).toLocaleString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.secFilings.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* Census Bureau */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                📈 Business AI Adoption
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.censusBureau.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.censusBureau.updateFrequency}<br/>
+                👥 Sample: {dataSourcesCitations.censusBureau.sampleSize}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.censusBureau.lastUpdated).toLocaleDateString('en-US', {
+                  month: 'long',
+                  year: 'numeric'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.censusBureau.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* Google Trends */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                🔍 Search Interest Data
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.googleTrends.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.googleTrends.updateFrequency}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.googleTrends.lastUpdated).toLocaleString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.googleTrends.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* PitchBook */}
+            <div>
+              <div className="text-white font-semibold mb-1">
+                🔄 VC & Investment Flows
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.pitchbookData.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.pitchbookData.updateFrequency}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.pitchbookData.lastUpdated).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.pitchbookData.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
           </div>
           <button
             onClick={() => setShowDataSources(false)}

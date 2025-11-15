@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import EnhancedDynamicBubble from './EnhancedDynamicBubble';
+import { expertQuotes, formatCitation } from '../data/citations';
 
 /**
  * Home Page Component
@@ -121,13 +122,64 @@ const HomePage = () => {
                   </ul>
                 </div>
                 <div className="bg-[#1a1f2e] border border-[#4A5A6A]/40 rounded-lg p-4">
-                  <div className="text-[#4A5A6A] font-bold mb-2">📊 Expert Views</div>
-                  <ul className="text-[#C0C0C0] text-sm space-y-1">
-                    <li>• Sam Altman: "AI is a bubble"</li>
-                    <li>• Ray Dalio: "Similar to dot-com"</li>
-                    <li>• Warren Buffett: Record cash pile</li>
-                    <li>• Michael Burry: 80% short AI</li>
-                  </ul>
+                  <div className="text-[#4A5A6A] font-bold mb-3">📊 Expert Views</div>
+                  <div className="text-[#C0C0C0] text-xs space-y-3">
+                    {/* Sam Altman Quote */}
+                    <div className="border-b border-[#4A5A6A]/20 pb-2">
+                      <div className="font-semibold text-white mb-1">
+                        "{expertQuotes.samAltman.quote}"
+                      </div>
+                      <div className="text-[10px] text-[#A0A0A0]">
+                        — {expertQuotes.samAltman.speaker}, {expertQuotes.samAltman.title}<br/>
+                        {formatCitation(expertQuotes.samAltman).formattedDate} at {expertQuotes.samAltman.time}<br/>
+                        <a href={expertQuotes.samAltman.url} target="_blank" rel="noopener noreferrer" className="text-[#800000] hover:text-[#A00000] underline">
+                          {expertQuotes.samAltman.source} →
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Ray Dalio Quote */}
+                    <div className="border-b border-[#4A5A6A]/20 pb-2">
+                      <div className="font-semibold text-white mb-1">
+                        "{expertQuotes.rayDalio.quote}"
+                      </div>
+                      <div className="text-[10px] text-[#A0A0A0]">
+                        — {expertQuotes.rayDalio.speaker}, {expertQuotes.rayDalio.title}<br/>
+                        {formatCitation(expertQuotes.rayDalio).formattedDate}<br/>
+                        <a href={expertQuotes.rayDalio.url} target="_blank" rel="noopener noreferrer" className="text-[#800000] hover:text-[#A00000] underline">
+                          {expertQuotes.rayDalio.source} →
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Warren Buffett Quote */}
+                    <div className="border-b border-[#4A5A6A]/20 pb-2">
+                      <div className="font-semibold text-white mb-1">
+                        {expertQuotes.warrenBuffett.quote}
+                      </div>
+                      <div className="text-[10px] text-[#A0A0A0]">
+                        — {expertQuotes.warrenBuffett.speaker}, {expertQuotes.warrenBuffett.title}<br/>
+                        {formatCitation(expertQuotes.warrenBuffett).formattedDate} at {expertQuotes.warrenBuffett.time}<br/>
+                        <a href={expertQuotes.warrenBuffett.url} target="_blank" rel="noopener noreferrer" className="text-[#800000] hover:text-[#A00000] underline">
+                          {expertQuotes.warrenBuffett.source} →
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Michael Burry Quote */}
+                    <div>
+                      <div className="font-semibold text-white mb-1">
+                        {expertQuotes.michaelBurry.quote}
+                      </div>
+                      <div className="text-[10px] text-[#A0A0A0]">
+                        — {expertQuotes.michaelBurry.speaker}, {expertQuotes.michaelBurry.title}<br/>
+                        {formatCitation(expertQuotes.michaelBurry).formattedDate} at {expertQuotes.michaelBurry.time}<br/>
+                        <a href={expertQuotes.michaelBurry.url} target="_blank" rel="noopener noreferrer" className="text-[#800000] hover:text-[#A00000] underline">
+                          {expertQuotes.michaelBurry.source} →
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="mt-6 text-center">
