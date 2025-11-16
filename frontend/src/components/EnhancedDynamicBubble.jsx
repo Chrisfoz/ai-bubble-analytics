@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { bubbleHistoryData, getBubbleDataByIndex } from '../data/bubbleHistory';
 import { getAllDataSources, formatUpdateTimestamp } from '../data/dataSources';
+import { dataSourcesCitations } from '../data/citations';
 
 /**
  * Enhanced Dynamic Bubble Visualization Component
@@ -66,34 +67,34 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
     setLastUpdate(new Date());
   };
 
-  // Color based on risk level
+  // Color based on risk level - Berkshire Hathaway Conservative Palette
   const getBubbleColor = () => {
     switch (riskLevel) {
       case 'EXTREME':
-        return 'from-red-500 via-red-600 to-red-700';
+        return 'from-red-900 via-red-800 to-red-700'; // Deep burgundy/red
       case 'HIGH':
-        return 'from-orange-500 via-red-500 to-pink-600';
+        return 'from-red-800 via-red-700 to-orange-800'; // Dark red to burnt orange
       case 'MODERATE':
-        return 'from-yellow-500 via-orange-500 to-red-500';
+        return 'from-slate-600 via-slate-500 to-slate-400'; // Steel blue/slate
       case 'LOW':
-        return 'from-green-400 via-blue-500 to-purple-600';
+        return 'from-gray-600 via-gray-500 to-gray-400'; // Neutral grey
       default:
-        return 'from-purple-500 via-pink-500 to-red-500';
+        return 'from-slate-700 via-slate-600 to-slate-500';
     }
   };
 
   const getGlowColor = () => {
     switch (riskLevel) {
       case 'EXTREME':
-        return 'rgba(239, 68, 68, 0.6)';
+        return 'rgba(128, 0, 0, 0.6)'; // Burgundy glow
       case 'HIGH':
-        return 'rgba(249, 115, 22, 0.5)';
+        return 'rgba(153, 27, 27, 0.5)'; // Dark red glow
       case 'MODERATE':
-        return 'rgba(234, 179, 8, 0.4)';
+        return 'rgba(74, 90, 106, 0.4)'; // Steel blue glow
       case 'LOW':
-        return 'rgba(34, 197, 94, 0.3)';
+        return 'rgba(156, 163, 175, 0.3)'; // Grey glow
       default:
-        return 'rgba(168, 85, 247, 0.4)';
+        return 'rgba(71, 85, 105, 0.4)';
     }
   };
 
@@ -122,11 +123,11 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
         )}
       </div>
 
-      {/* Data Sources Panel */}
+      {/* Data Sources Panel - Berkshire Conservative Styling */}
       {showDataSources && (
-        <div className="absolute top-0 right-4 z-50 w-80 max-h-96 overflow-y-auto bg-slate-800/95 border border-slate-600 rounded-lg p-4 shadow-2xl">
+        <div className="absolute top-0 right-4 z-50 w-80 max-h-96 overflow-y-auto bg-[#0D1117]/95 border border-[#4A5A6A] rounded-lg p-4 shadow-2xl">
           <div className="flex justify-between items-center mb-3">
-            <h4 className="text-yellow-400 font-bold text-sm">📊 Data Sources</h4>
+            <h4 className="text-[#800000] font-bold text-sm">📊 Data Sources</h4>
             <button
               onClick={() => setShowDataSources(false)}
               className="text-gray-400 hover:text-white text-xs"
@@ -135,28 +136,156 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
             </button>
           </div>
           <div className="space-y-3 text-xs">
-            {getAllDataSources().slice(0, 6).map((source) => (
-              <div key={source.key} className="border-b border-slate-700 pb-2">
-                <div className="text-white font-semibold mb-1">
-                  {source.icon} {source.name}
-                </div>
-                <div className="text-gray-400 mb-1">📡 {source.provider}</div>
-                <div className="text-gray-500 text-[10px]">🔄 {source.updateFrequency}</div>
-                <div className="text-green-400 text-[10px]">✓ {source.confidence}</div>
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 hover:text-blue-300 text-[10px] underline"
-                >
-                  View Source →
-                </a>
+            {/* S&P 500 Data */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                📊 S&P 500 Index Data
               </div>
-            ))}
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.sp500Data.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.sp500Data.updateFrequency}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.sp500Data.lastUpdated).toLocaleString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  timeZoneName: 'short'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.sp500Data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* Gartner/IDC Forecasts */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                💰 AI Revenue Forecasts
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.gartnerForecasts.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                📄 {dataSourcesCitations.gartnerForecasts.report}<br/>
+                📅 Published: {new Date(dataSourcesCitations.gartnerForecasts.publishDate).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.gartnerForecasts.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* SEC Filings */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                💳 SEC Corporate Filings
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.secFilings.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.secFilings.updateFrequency}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.secFilings.lastUpdated).toLocaleString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.secFilings.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* Census Bureau */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                📈 Business AI Adoption
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.censusBureau.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.censusBureau.updateFrequency}<br/>
+                👥 Sample: {dataSourcesCitations.censusBureau.sampleSize}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.censusBureau.lastUpdated).toLocaleDateString('en-US', {
+                  month: 'long',
+                  year: 'numeric'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.censusBureau.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* Google Trends */}
+            <div className="border-b border-slate-700 pb-2">
+              <div className="text-white font-semibold mb-1">
+                🔍 Search Interest Data
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.googleTrends.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.googleTrends.updateFrequency}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.googleTrends.lastUpdated).toLocaleString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.googleTrends.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
+
+            {/* PitchBook */}
+            <div>
+              <div className="text-white font-semibold mb-1">
+                🔄 VC & Investment Flows
+              </div>
+              <div className="text-gray-400 mb-1">📡 {dataSourcesCitations.pitchbookData.source}</div>
+              <div className="text-gray-500 text-[10px]">
+                🔄 {dataSourcesCitations.pitchbookData.updateFrequency}<br/>
+                ⏰ Last: {new Date(dataSourcesCitations.pitchbookData.lastUpdated).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric'
+                })}
+              </div>
+              <a
+                href={dataSourcesCitations.pitchbookData.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#800000] hover:text-[#A00000] text-[10px] underline"
+              >
+                View Source →
+              </a>
+            </div>
           </div>
           <button
             onClick={() => setShowDataSources(false)}
-            className="mt-3 w-full py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs rounded"
+            className="mt-3 w-full py-2 bg-[#4A5A6A] hover:bg-[#5A6A7A] text-white text-xs rounded"
           >
             ➖ Minimize
           </button>
@@ -167,7 +296,7 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
       {!showDataSources && (
         <button
           onClick={() => setShowDataSources(true)}
-          className="absolute top-4 right-4 z-50 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm rounded-lg shadow-lg"
+          className="absolute top-4 right-4 z-50 px-4 py-2 bg-[#800000] hover:bg-[#A00000] text-white text-sm rounded-lg shadow-lg"
         >
           📊 Show Data Sources
         </button>
@@ -233,11 +362,11 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
         </div>
       </div>
 
-      {/* How It Works Panel */}
+      {/* How It Works Panel - Conservative Styling */}
       {showHowItWorks && (
-        <div className="mt-8 max-w-3xl bg-slate-800/95 border border-slate-600 rounded-lg p-6 shadow-2xl">
+        <div className="mt-8 max-w-3xl bg-[#0D1117]/95 border border-[#4A5A6A] rounded-lg p-6 shadow-2xl">
           <div className="flex justify-between items-start mb-4">
-            <h3 className="text-2xl font-bold text-yellow-400">🔬 How This Bubble Works</h3>
+            <h3 className="text-2xl font-bold text-[#800000]">🔬 How This Bubble Works</h3>
             <button
               onClick={() => setShowHowItWorks(false)}
               className="text-gray-400 hover:text-white"
@@ -247,33 +376,33 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div className="bg-slate-700/50 p-4 rounded">
-              <h4 className="font-bold text-white mb-2">What Drives the Size?</h4>
-              <p className="text-gray-300">
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-4 rounded">
+              <h4 className="font-bold text-[#E8E8E8] mb-2">What Drives the Size?</h4>
+              <p className="text-[#C0C0C0]">
                 The bubble grows based on 10 weighted metrics like the $600B revenue gap,
                 75% debt-funding ratio, and 44% M7 market concentration.
               </p>
             </div>
 
-            <div className="bg-slate-700/50 p-4 rounded">
-              <h4 className="font-bold text-white mb-2">Where Does Data Come From?</h4>
-              <p className="text-gray-300">
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-4 rounded">
+              <h4 className="font-bold text-[#E8E8E8] mb-2">Where Does Data Come From?</h4>
+              <p className="text-[#C0C0C0]">
                 Real-time feeds from SEC filings, Census Bureau surveys, Google Trends,
                 and Gartner forecasts—all updated at different frequencies.
               </p>
             </div>
 
-            <div className="bg-slate-700/50 p-4 rounded">
-              <h4 className="font-bold text-white mb-2">What Makes It "Pop"?</h4>
-              <p className="text-gray-300">
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-4 rounded">
+              <h4 className="font-bold text-[#E8E8E8] mb-2">What Makes It "Pop"?</h4>
+              <p className="text-[#C0C0C0]">
                 Pop triggers when debt ratio &gt;85% + revenue gap &gt;$800B + M7 earnings
                 collapse &gt;15% gap—based on institutional risk models.
               </p>
             </div>
 
-            <div className="bg-slate-700/50 p-4 rounded">
-              <h4 className="font-bold text-white mb-2">How Accurate Is This?</h4>
-              <p className="text-gray-300">
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-4 rounded">
+              <h4 className="font-bold text-[#E8E8E8] mb-2">How Accurate Is This?</h4>
+              <p className="text-[#C0C0C0]">
                 This is a <strong>synthetic visualization</strong>, not a prediction.
                 It synthesizes warnings from RBC, Richmond Fed, and Michael Burry into an intuitive index.
               </p>
@@ -282,14 +411,14 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
         </div>
       )}
 
-      {/* Timeline Slider */}
-      <div className="mt-12 w-full max-w-4xl bg-slate-800/90 border border-slate-600 rounded-lg p-6 shadow-2xl">
+      {/* Timeline Slider - Conservative Styling */}
+      <div className="mt-12 w-full max-w-4xl bg-[#0D1117]/90 border border-[#4A5A6A] rounded-lg p-6 shadow-2xl">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-white">📅 Historical Bubble Analysis</h3>
+          <h3 className="text-xl font-bold text-[#E8E8E8]">📅 Historical Bubble Analysis</h3>
           {!isLiveMode && (
             <button
               onClick={goLive}
-              className="px-4 py-2 bg-red-500 hover:bg-red-400 text-white font-semibold rounded text-sm"
+              className="px-4 py-2 bg-[#800000] hover:bg-[#A00000] text-white font-semibold rounded text-sm"
             >
               🔴 Go Live
             </button>
@@ -298,7 +427,7 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
 
         {currentDataPoint && (
           <div className="mb-4">
-            <div className="text-yellow-400 font-bold text-lg mb-1">
+            <div className="text-[#800000] font-bold text-lg mb-1">
               {new Date(currentDataPoint.date).toLocaleDateString('en-US', {
                 weekday: 'long',
                 month: 'long',
@@ -306,7 +435,7 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
                 year: 'numeric'
               })}
             </div>
-            <div className="text-gray-300 italic text-sm">
+            <div className="text-[#C0C0C0] italic text-sm">
               Key Event: {currentDataPoint.catalyst}
             </div>
           </div>
@@ -342,62 +471,62 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
         {/* Current metrics display */}
         {currentMetrics && (
           <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-            <div className="bg-slate-700/50 p-2 rounded">
-              <div className="text-gray-400">M7 Divergence</div>
-              <div className="text-white font-bold">
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-2 rounded">
+              <div className="text-[#A0A0A0]">M7 Divergence</div>
+              <div className="text-[#E8E8E8] font-bold">
                 {(currentMetrics.m7_weight - currentMetrics.m7_earnings).toFixed(1)}%
               </div>
             </div>
-            <div className="bg-slate-700/50 p-2 rounded">
-              <div className="text-gray-400">Revenue Gap</div>
-              <div className="text-white font-bold">${currentMetrics.revenue_gap}B</div>
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-2 rounded">
+              <div className="text-[#A0A0A0]">Revenue Gap</div>
+              <div className="text-[#E8E8E8] font-bold">${currentMetrics.revenue_gap}B</div>
             </div>
-            <div className="bg-slate-700/50 p-2 rounded">
-              <div className="text-gray-400">Debt/Capex</div>
-              <div className="text-white font-bold">
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-2 rounded">
+              <div className="text-[#A0A0A0]">Debt/Capex</div>
+              <div className="text-[#E8E8E8] font-bold">
                 {(currentMetrics.debt_ratio * 100).toFixed(0)}%
               </div>
             </div>
-            <div className="bg-slate-700/50 p-2 rounded">
-              <div className="text-gray-400">Adoption</div>
-              <div className="text-white font-bold">{currentMetrics.adoption_rate.toFixed(1)}%</div>
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-2 rounded">
+              <div className="text-[#A0A0A0]">Adoption</div>
+              <div className="text-[#E8E8E8] font-bold">{currentMetrics.adoption_rate.toFixed(1)}%</div>
             </div>
-            <div className="bg-slate-700/50 p-2 rounded">
-              <div className="text-gray-400">Search Volume</div>
-              <div className="text-white font-bold">+{currentMetrics.search_volume}%</div>
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-2 rounded">
+              <div className="text-[#A0A0A0]">Search Volume</div>
+              <div className="text-[#E8E8E8] font-bold">+{currentMetrics.search_volume}%</div>
             </div>
-            <div className="bg-slate-700/50 p-2 rounded">
-              <div className="text-gray-400">Bubble Index</div>
-              <div className="text-white font-bold">{Math.round(size)}/100</div>
+            <div className="bg-[#1a1f2e]/70 border border-[#4A5A6A]/30 p-2 rounded">
+              <div className="text-[#A0A0A0]">Bubble Index</div>
+              <div className="text-[#E8E8E8] font-bold">{Math.round(size)}/100</div>
             </div>
           </div>
         )}
       </div>
 
-      {/* Legend */}
+      {/* Legend - Conservative Colors */}
       <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
-          <span className="text-gray-300">0-45: Low Risk</span>
+          <div className="w-3 h-3 rounded-full bg-gray-500"></div>
+          <span className="text-[#C0C0C0]">0-45: Low Risk</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-          <span className="text-gray-300">45-55: Moderate</span>
+          <div className="w-3 h-3 rounded-full bg-slate-500"></div>
+          <span className="text-[#C0C0C0]">45-55: Moderate</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-          <span className="text-gray-300">55-65: High</span>
+          <div className="w-3 h-3 rounded-full bg-red-800"></div>
+          <span className="text-[#C0C0C0]">55-65: High</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500"></div>
-          <span className="text-gray-300">65+: Extreme</span>
+          <div className="w-3 h-3 rounded-full bg-red-900"></div>
+          <span className="text-[#C0C0C0]">65+: Extreme</span>
         </div>
       </div>
 
       {/* Description */}
-      <p className="mt-6 text-center text-gray-400 text-sm max-w-2xl">
+      <p className="mt-6 text-center text-[#C0C0C0] text-sm max-w-2xl">
         The AI Bubble Index (ABI) synthesizes 10 institutional metrics tracking market concentration,
-        revenue gaps, debt levels, and adoption rates. Current index: <span className="text-red-400 font-bold">{Math.round(size)}/100</span>
+        revenue gaps, debt levels, and adoption rates. Current index: <span className="text-[#800000] font-bold">{Math.round(size)}/100</span>
       </p>
     </div>
   );
