@@ -15,8 +15,13 @@ import DisclaimerPage from './components/DisclaimerPage';
  */
 function App() {
   return (
-    <Router>
-      <div className="App">
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
+      <div className="App min-h-screen flex flex-col">
         <Navigation />
         <Routes>
           <Route path="/" element={<HomePage />} />

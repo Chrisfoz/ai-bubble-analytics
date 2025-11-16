@@ -189,6 +189,28 @@ button, a, input, select, textarea {
   transition: opacity 300ms, transform 300ms;
 }
 
+/* Custom slider styling */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #fbbf24;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #fbbf24;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+}
+
 /* Enhanced Bubble Visualization Styles */
 
 /* Data Sources Panel Scrollbar */

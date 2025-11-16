@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 /**
  * Navigation Component
- * Global navigation bar with responsive mobile menu
+ * Professional, Big-4 style global navigation bar with responsive mobile menu
  */
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,12 +14,10 @@ const Navigation = () => {
     { path: '/metrics', label: 'Metrics' },
     { path: '/context', label: 'Context' },
     { path: '/news', label: 'News' },
-    { path: '/newsletter', label: 'Newsletter' }
+    { path: '/newsletter', label: 'Newsletter' },
   ];
 
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="bg-[#0D1117]/95 backdrop-blur-lg border-b border-[#4A5A6A]/30 sticky top-0 z-50">
@@ -40,11 +38,11 @@ const Navigation = () => {
 
           {/* Desktop Navigation - Berkshire Colors */}
           <div className="hidden md:flex items-center gap-1">
-            {navLinks.map(link => (
+            {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
                   isActive(link.path)
                     ? 'bg-[#800000] text-white'
                     : 'text-[#C0C0C0] hover:bg-[#4A5A6A]/20 hover:text-white'
@@ -69,12 +67,7 @@ const Navigation = () => {
             className="md:hidden p-2 text-[#E8E8E8] hover:bg-[#4A5A6A]/20 rounded-lg transition-colors"
             aria-label="Toggle menu"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {mobileMenuOpen ? (
                 <path
                   strokeLinecap="round"
@@ -98,12 +91,12 @@ const Navigation = () => {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-[#4A5A6A]/30 bg-[#0D1117]/98">
             <div className="flex flex-col gap-2">
-              {navLinks.map(link => (
+              {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                  className={`px-4 py-3 rounded-md text-sm font-medium transition-colors duration-200 ${
                     isActive(link.path)
                       ? 'bg-[#800000] text-white'
                       : 'text-[#C0C0C0] hover:bg-[#4A5A6A]/20 hover:text-white'
