@@ -25,10 +25,14 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
       setSize(dataPoint.abi);
       setCurrentMetrics(dataPoint.metrics);
 
-      // Calculate risk level from ABI
-      if (dataPoint.abi >= 65) setRiskLevel('EXTREME');
-      else if (dataPoint.abi >= 55) setRiskLevel('HIGH');
-      else if (dataPoint.abi >= 45) setRiskLevel('MODERATE');
+      // Calculate risk level from ABI using RAG system
+      // GREEN (0-40): LOW risk
+      // AMBER (41-60): MODERATE risk
+      // ORANGE (61-80): HIGH risk
+      // RED (81-100): EXTREME risk
+      if (dataPoint.abi >= 81) setRiskLevel('EXTREME');
+      else if (dataPoint.abi >= 61) setRiskLevel('HIGH');
+      else if (dataPoint.abi >= 41) setRiskLevel('MODERATE');
       else setRiskLevel('LOW');
     }
   }, [timelineIndex]);
@@ -67,17 +71,21 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
     setLastUpdate(new Date());
   };
 
-  // Color based on risk level - Berkshire Hathaway Conservative Palette
+  // Color based on risk level - RAG (Red-Amber-Green) System
   const getBubbleColor = () => {
     switch (riskLevel) {
       case 'EXTREME':
-        return 'from-red-900 via-red-800 to-red-700'; // Deep burgundy/red
+        // RED (ABI 81-100): Critical risk - Deep red
+        return 'from-red-900 via-red-800 to-red-700';
       case 'HIGH':
-        return 'from-red-800 via-red-700 to-orange-800'; // Dark red to burnt orange
+        // ORANGE (ABI 61-80): High risk - Burnt orange to dark orange
+        return 'from-orange-700 via-orange-600 to-orange-500';
       case 'MODERATE':
-        return 'from-slate-600 via-slate-500 to-slate-400'; // Steel blue/slate
+        // AMBER (ABI 41-60): Moderate risk - Amber/yellow tones
+        return 'from-amber-600 via-yellow-600 to-yellow-500';
       case 'LOW':
-        return 'from-gray-600 via-gray-500 to-gray-400'; // Neutral grey
+        // GREEN (ABI 0-40): Low risk - Green tones
+        return 'from-green-700 via-green-600 to-green-500';
       default:
         return 'from-slate-700 via-slate-600 to-slate-500';
     }
@@ -86,13 +94,17 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
   const getGlowColor = () => {
     switch (riskLevel) {
       case 'EXTREME':
-        return 'rgba(128, 0, 0, 0.6)'; // Burgundy glow
+        // RED glow for extreme risk
+        return 'rgba(185, 28, 28, 0.6)'; // red-700
       case 'HIGH':
-        return 'rgba(153, 27, 27, 0.5)'; // Dark red glow
+        // ORANGE glow for high risk
+        return 'rgba(234, 88, 12, 0.5)'; // orange-600
       case 'MODERATE':
-        return 'rgba(74, 90, 106, 0.4)'; // Steel blue glow
+        // AMBER/YELLOW glow for moderate risk
+        return 'rgba(217, 119, 6, 0.4)'; // amber-600
       case 'LOW':
-        return 'rgba(156, 163, 175, 0.3)'; // Grey glow
+        // GREEN glow for low risk
+        return 'rgba(21, 128, 61, 0.4)'; // green-700
       default:
         return 'rgba(71, 85, 105, 0.4)';
     }
@@ -359,6 +371,57 @@ const EnhancedDynamicBubble = ({ initialSize = 70, initialRiskLevel = 'HIGH' }) 
           }`}>
             {riskLevel} RISK
           </div>
+        </div>
+      </div>
+
+      {/* RAG (Red-Amber-Green) Risk Scale Legend */}
+      <div className="mt-8 max-w-2xl">
+        <div className="text-center mb-3">
+          <h4 className="text-sm font-semibold text-[#E8E8E8] uppercase tracking-wide">
+            Risk Scale (RAG System)
+          </h4>
+        </div>
+        <div className="grid grid-cols-4 gap-2 text-xs">
+          {/* GREEN - LOW */}
+          <div className="bg-[#1a1f2e]/70 border border-green-700/50 rounded-lg p-3 text-center">
+            <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-gradient-to-br from-green-700 via-green-600 to-green-500"
+                 style={{ boxShadow: '0 0 20px rgba(21, 128, 61, 0.4)' }}></div>
+            <div className="font-bold text-green-400 mb-1">LOW</div>
+            <div className="text-[#A0A0A0]">ABI 0-40</div>
+            <div className="text-[#808080] text-[10px] mt-1">Minimal Risk</div>
+          </div>
+
+          {/* AMBER - MODERATE */}
+          <div className="bg-[#1a1f2e]/70 border border-amber-600/50 rounded-lg p-3 text-center">
+            <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-gradient-to-br from-amber-600 via-yellow-600 to-yellow-500"
+                 style={{ boxShadow: '0 0 20px rgba(217, 119, 6, 0.4)' }}></div>
+            <div className="font-bold text-amber-400 mb-1">MODERATE</div>
+            <div className="text-[#A0A0A0]">ABI 41-60</div>
+            <div className="text-[#808080] text-[10px] mt-1">Watch Closely</div>
+          </div>
+
+          {/* ORANGE - HIGH */}
+          <div className="bg-[#1a1f2e]/70 border border-orange-600/50 rounded-lg p-3 text-center">
+            <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-gradient-to-br from-orange-700 via-orange-600 to-orange-500"
+                 style={{ boxShadow: '0 0 20px rgba(234, 88, 12, 0.5)' }}></div>
+            <div className="font-bold text-orange-400 mb-1">HIGH</div>
+            <div className="text-[#A0A0A0]">ABI 61-80</div>
+            <div className="text-[#808080] text-[10px] mt-1">Elevated Risk</div>
+          </div>
+
+          {/* RED - EXTREME */}
+          <div className="bg-[#1a1f2e]/70 border border-red-700/50 rounded-lg p-3 text-center">
+            <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-gradient-to-br from-red-900 via-red-800 to-red-700"
+                 style={{ boxShadow: '0 0 20px rgba(185, 28, 28, 0.6)' }}></div>
+            <div className="font-bold text-red-400 mb-1">EXTREME</div>
+            <div className="text-[#A0A0A0]">ABI 81-100</div>
+            <div className="text-[#808080] text-[10px] mt-1">Critical Risk</div>
+          </div>
+        </div>
+        <div className="text-center mt-3 text-[10px] text-[#808080]">
+          Current ABI: <span className="font-bold text-[#E8E8E8]">{Math.round(size)}</span>
+          {' • '}
+          Color indicates risk level based on AI Bubble Index score
         </div>
       </div>
 
