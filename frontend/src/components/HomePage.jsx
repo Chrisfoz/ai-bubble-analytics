@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import EnhancedDynamicBubble from './EnhancedDynamicBubble';
-import { expertQuotes, formatCitation } from '../data/citations';
 
 /**
  * Home Page Component
@@ -91,132 +90,69 @@ const HomePage = () => {
               View Full Metrics Dashboard
             </Link>
             <Link
-              to="/context"
+              to="/about"
               className="px-8 py-4 bg-[#4A5A6A]/20 backdrop-blur-lg text-[#E8E8E8] font-semibold rounded-lg border border-[#4A5A6A] hover:bg-[#4A5A6A]/40 transition-all duration-300 text-center"
             >
-              Understand the AI Bubble
+              Learn More
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Quick Context Section - Conservative Styling */}
-      <div className="bg-[#0a0e14]/50 py-16">
+      {/* Quick Value Proposition - Mobile-Friendly */}
+      <div className="bg-[#0a0e14]/50 py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-[#E8E8E8] mb-6 text-center">What is the AI Bubble?</h2>
-            <div className="bg-[#1a1f2e]/70 backdrop-blur-lg rounded-xl p-8 border border-[#4A5A6A]/50">
-              <p className="text-[#C0C0C0] text-lg leading-relaxed mb-4">
-                The AI bubble refers to a theorized stock market bubble growing amid the current AI boom.
-                Concerns originate from <span className="text-[#800000] font-semibold">circular financing</span> patterns
-                where leading tech firms pass investments between each other, artificially inflating valuations.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                <div className="bg-[#2a1515] border border-[#800000]/40 rounded-lg p-4">
-                  <div className="text-[#A00000] font-bold mb-2">⚠️ Warning Signs</div>
-                  <ul className="text-[#C0C0C0] text-sm space-y-1">
-                    <li>• $600B revenue expectation gap</li>
-                    <li>• Investment 35x ahead of adoption</li>
-                    <li>• Circular financing flows &gt;$180B</li>
-                    <li>• Debt-funded expansion at risk</li>
-                  </ul>
-                </div>
-                <div className="bg-[#1a1f2e] border border-[#4A5A6A]/40 rounded-lg p-4">
-                  <div className="text-[#4A5A6A] font-bold mb-3">📊 Expert Views</div>
-                  <div className="text-[#C0C0C0] text-xs space-y-3">
-                    {/* Sam Altman Quote */}
-                    <div className="border-b border-[#4A5A6A]/20 pb-2">
-                      <div className="font-semibold text-white mb-1">
-                        "{expertQuotes.samAltman.quote}"
-                      </div>
-                      <div className="text-[10px] text-[#A0A0A0]">
-                        — {expertQuotes.samAltman.speaker}, {expertQuotes.samAltman.title}<br/>
-                        {formatCitation(expertQuotes.samAltman).formattedDate} at {expertQuotes.samAltman.time}<br/>
-                        <a href={expertQuotes.samAltman.url} target="_blank" rel="noopener noreferrer" className="text-[#800000] hover:text-[#A00000] underline">
-                          {expertQuotes.samAltman.source} →
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Ray Dalio Quote */}
-                    <div className="border-b border-[#4A5A6A]/20 pb-2">
-                      <div className="font-semibold text-white mb-1">
-                        "{expertQuotes.rayDalio.quote}"
-                      </div>
-                      <div className="text-[10px] text-[#A0A0A0]">
-                        — {expertQuotes.rayDalio.speaker}, {expertQuotes.rayDalio.title}<br/>
-                        {formatCitation(expertQuotes.rayDalio).formattedDate}<br/>
-                        <a href={expertQuotes.rayDalio.url} target="_blank" rel="noopener noreferrer" className="text-[#800000] hover:text-[#A00000] underline">
-                          {expertQuotes.rayDalio.source} →
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Warren Buffett Quote */}
-                    <div className="border-b border-[#4A5A6A]/20 pb-2">
-                      <div className="font-semibold text-white mb-1">
-                        {expertQuotes.warrenBuffett.quote}
-                      </div>
-                      <div className="text-[10px] text-[#A0A0A0]">
-                        — {expertQuotes.warrenBuffett.speaker}, {expertQuotes.warrenBuffett.title}<br/>
-                        {formatCitation(expertQuotes.warrenBuffett).formattedDate} at {expertQuotes.warrenBuffett.time}<br/>
-                        <a href={expertQuotes.warrenBuffett.url} target="_blank" rel="noopener noreferrer" className="text-[#800000] hover:text-[#A00000] underline">
-                          {expertQuotes.warrenBuffett.source} →
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Michael Burry Quote */}
-                    <div>
-                      <div className="font-semibold text-white mb-1">
-                        {expertQuotes.michaelBurry.quote}
-                      </div>
-                      <div className="text-[10px] text-[#A0A0A0]">
-                        — {expertQuotes.michaelBurry.speaker}, {expertQuotes.michaelBurry.title}<br/>
-                        {formatCitation(expertQuotes.michaelBurry).formattedDate} at {expertQuotes.michaelBurry.time}<br/>
-                        <a href={expertQuotes.michaelBurry.url} target="_blank" rel="noopener noreferrer" className="text-[#800000] hover:text-[#A00000] underline">
-                          {expertQuotes.michaelBurry.source} →
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-[#1a1f2e]/70 backdrop-blur-lg rounded-xl p-6 border border-[#4A5A6A]/50 text-center">
+                <div className="text-3xl mb-3">📊</div>
+                <h3 className="text-lg font-bold text-[#E8E8E8] mb-2">10 Key Metrics</h3>
+                <p className="text-[#C0C0C0] text-sm">
+                  Track market concentration, valuations, and systemic risks
+                </p>
               </div>
-              <div className="mt-6 text-center">
-                <Link to="/context" className="text-[#800000] hover:text-[#A00000] font-semibold">
-                  Read Full Analysis →
-                </Link>
+              <div className="bg-[#1a1f2e]/70 backdrop-blur-lg rounded-xl p-6 border border-[#4A5A6A]/50 text-center">
+                <div className="text-3xl mb-3">🎯</div>
+                <h3 className="text-lg font-bold text-[#E8E8E8] mb-2">RAG Risk System</h3>
+                <p className="text-[#C0C0C0] text-sm">
+                  Simple color-coded risk levels: Green, Amber, Orange, Red
+                </p>
+              </div>
+              <div className="bg-[#1a1f2e]/70 backdrop-blur-lg rounded-xl p-6 border border-[#4A5A6A]/50 text-center">
+                <div className="text-3xl mb-3">🔓</div>
+                <h3 className="text-lg font-bold text-[#E8E8E8] mb-2">Institutional Data</h3>
+                <p className="text-[#C0C0C0] text-sm">
+                  Access Wall Street-grade analysis, free for everyone
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Newsletter CTA - Conservative Styling */}
-      <div className="bg-[#800000]/10 border-y border-[#800000]/30 py-16">
+      {/* Newsletter CTA - Mobile-Friendly */}
+      <div className="bg-[#800000]/10 border-y border-[#800000]/30 py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-[#E8E8E8] mb-4">Stay Informed</h2>
-            <p className="text-[#C0C0C0] mb-8">
-              Receive institutional-grade AI market analysis and commentary
+            <h2 className="text-2xl md:text-3xl font-bold text-[#E8E8E8] mb-3">Daily AI Bubble Updates</h2>
+            <p className="text-[#C0C0C0] mb-6 text-sm md:text-base">
+              Get the AI Bubble Index and market analysis delivered every morning
             </p>
             <Link
               to="/newsletter"
-              className="inline-block px-8 py-4 bg-[#800000] hover:bg-[#A00000] text-white font-semibold rounded-lg transition-all duration-300"
+              className="inline-block px-6 md:px-8 py-3 md:py-4 bg-[#800000] hover:bg-[#A00000] text-white font-semibold rounded-lg transition-all duration-300 text-sm md:text-base"
             >
-              Subscribe to Newsletter
+              Subscribe Free
             </Link>
           </div>
         </div>
       </div>
 
       {/* Educational Disclaimer */}
-      <div className="bg-[#0D1117] py-8 border-t border-[#4A5A6A]/30">
+      <div className="bg-[#0D1117] py-6 md:py-8 border-t border-[#4A5A6A]/30">
         <div className="container mx-auto px-4">
-          <p className="text-center text-[#A0A0A0] text-sm">
-            ⚠️ <strong>Educational purposes only.</strong> Not financial advice.
-            Data sourced from Bureau of Economic Analysis, RBC Capital Markets, Richmond Fed,
-            Apollo Global Management, and public filings. Always do your own research.
+          <p className="text-center text-[#A0A0A0] text-xs md:text-sm max-w-3xl mx-auto">
+            ⚠️ <strong>Educational purposes only.</strong> Not financial advice. Always do your own research.
           </p>
         </div>
       </div>
