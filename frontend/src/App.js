@@ -4,7 +4,7 @@ import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
 import MetricsPage from './components/MetricsPage';
-import ContextPage from './components/ContextPage';
+import AboutPage from './components/AboutPage';
 import NewsPage from './components/NewsPage';
 import NewsletterPage from './components/NewsletterPage';
 import DisclaimerPage from './components/DisclaimerPage';
@@ -26,8 +26,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/metrics" element={<MetricsPage />} />
-          <Route path="/context" element={<ContextPage />} />
           <Route path="/news" element={<NewsPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/newsletter" element={<NewsletterPage />} />
           <Route path="/disclaimer" element={<DisclaimerPage />} />
         </Routes>
