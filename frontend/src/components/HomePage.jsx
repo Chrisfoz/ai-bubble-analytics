@@ -40,7 +40,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-[#0D1117]">
       {/* Hero Section with Dynamic Bubble - Berkshire Hathaway Styling */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-20"></div>
+        {/* Background grid pattern - removed temporarily to fix build */}
 
         <div className="relative container mx-auto px-4 py-20">
           <div className="text-center mb-12">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { bubbleHistoryData, getBubbleDataByIndex } from '../data/bubbleHistory';
-import { getAllDataSources, formatUpdateTimestamp } from '../data/dataSources';
+import { formatUpdateTimestamp } from '../data/dataSources';
 import { dataSourcesCitations } from '../data/citations';
 
 /**

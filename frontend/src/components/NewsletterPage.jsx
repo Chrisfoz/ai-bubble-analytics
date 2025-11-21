@@ -216,7 +216,7 @@ const NewsletterPage = () => {
               <div className="mt-6 pt-4 border-t border-gray-200 text-center">
                 <a href="#" className="text-[#800000] font-semibold hover:text-[#A00000]">
                   View Full Dashboard →
-                </Link>
+                </a>
               </div>
             </div>
           </div>

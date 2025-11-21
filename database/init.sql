@@ -118,8 +118,9 @@ CREATE POLICY "Public can read metrics snapshots"
 DROP POLICY IF EXISTS "Service role can manage metrics snapshots" ON daily_metrics_snapshots;
 CREATE POLICY "Service role can manage metrics snapshots"
   ON daily_metrics_snapshots
-  FOR INSERT, UPDATE, DELETE
-  USING (auth.role() = 'service_role');
+  FOR ALL
+  USING (auth.role() = 'service_role')
+  WITH CHECK (auth.role() = 'service_role');
 
 -- ============================================================================
 -- FUNCTIONS & TRIGGERS
