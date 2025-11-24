@@ -7,10 +7,10 @@ export const dataSourcesMetadata = {
   sources: {
     magnificent7_divergence: {
       name: 'Magnificent 7 Weight vs. Earnings',
-      provider: 'S&P Global via Yahoo Finance API',
+      provider: 'Alpha Vantage + Finnhub',
       updateFrequency: 'Daily at 4:30 PM EST (market close)',
       dataPoints: 'S&P 500 constituent weights, quarterly earnings reports',
-      url: 'https://finance.yahoo.com/quote/%5EGSPC/holdings',
+      url: 'https://www.alphavantage.co/',
       confidence: 'High - Real-time market data',
       icon: '📊',
       description: 'Tracks the divergence between the Magnificent 7 companies\' market weight in the S&P 500 versus their actual earnings contribution.'

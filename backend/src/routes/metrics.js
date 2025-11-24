@@ -52,7 +52,7 @@ router.get('/bubble-index', async (req, res) => {
  */
 router.get('/magnificent7', async (req, res) => {
   try {
-    // TODO: Replace with real data from Yahoo Finance API / Alpha Vantage
+    // TODO: Replace with real data from Alpha Vantage / Finnhub APIs
     const m7Data = {
       success: true,
       data: {

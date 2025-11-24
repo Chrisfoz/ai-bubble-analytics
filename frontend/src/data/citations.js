@@ -57,7 +57,7 @@ export const dataSourcesCitations = {
     lastUpdated: "2025-11-15T16:30:00-05:00",
     updateFrequency: "Daily at 4:30 PM EST (market close)",
     url: "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
-    apiEndpoint: "Via Yahoo Finance API",
+    apiEndpoint: "Via Alpha Vantage + Finnhub APIs",
     dataPoints: {
       m7Weight: {
         value: 44.2,

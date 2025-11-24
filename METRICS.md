@@ -97,9 +97,13 @@ See `/frontend/src/components/charts/` for implementation:
   - Endpoint: `https://api.stlouisfed.org/fred/series/observations`
   - Rate Limit: 120 requests/minute
 
-- **Yahoo Finance**: Stock data, market cap
-  - Endpoint: `https://query1.finance.yahoo.com/v8/finance/chart/{symbol}`
-  - Rate Limit: ~2000 requests/hour
+- **Alpha Vantage**: Stock data, market cap, earnings
+  - Endpoint: `https://www.alphavantage.co/query`
+  - Rate Limit: 25 requests/day (free tier), 75 requests/minute (premium)
+
+- **Finnhub**: Real-time stock quotes, company financials
+  - Endpoint: `https://finnhub.io/api/v1/`
+  - Rate Limit: 60 API calls/minute (free tier)
 
 - **Google Trends** (via unofficial API):
   - Library: `google-trends-api` npm package
